@@ -45,6 +45,7 @@ clean:
 		if [ -n "$$OUT" ]; then $(RM) "$$OUT"; fi; \
 	fi
 	@$(RM) .mypy_cache .pytest_cache
+	@$(RM) dist/
 	@find . -type d -name "__pycache__" -exec $(RM) {} +
 
 lint:
