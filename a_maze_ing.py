@@ -91,7 +91,7 @@ def interactive_key(
         try:
             choice: str = input(prompt).strip().lower()
             animation.flush_input()
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print("\n")
             animation.anim_quit()
             return
@@ -193,7 +193,7 @@ def interactive_key(
                 )
                 my_maze = candidate
                 time.sleep(1)
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print(f"\n{color.MAZE_RED}Operation cancelled.{color.RESET}")
                 time.sleep(1)
             except (ValueError, IndexError) as err:
@@ -262,7 +262,7 @@ def interactive_key(
                     f"{new_entry} !{color.RESET}"
                 )
                 time.sleep(1)
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print(f"\n{color.MAZE_RED}Operation cancelled.{color.RESET}")
                 time.sleep(1)
             except (ValueError, IndexError) as err:
@@ -308,7 +308,7 @@ def interactive_key(
                     f"{new_exit} !{color.RESET}"
                 )
                 time.sleep(1)
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print(f"\n{color.MAZE_RED}Operation cancelled.{color.RESET}")
                 time.sleep(1)
             except (ValueError, IndexError) as err:
@@ -352,7 +352,7 @@ if __name__ == "__main__":
         animation.anim_launch()
         interactive_key(my_maze, config_data, output_filename)
 
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print("\n")
         animation.anim_quit()
         sys.exit(0)

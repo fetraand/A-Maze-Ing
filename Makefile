@@ -22,9 +22,14 @@ all: run
 
 install:
 	@$(PIP) install --upgrade pip -q
-	@$(PIP) install -r requierements.txt -q
-	@$(PIP) install ./mazegen-*.whl -q
-	@echo "Dependencies installed."
+	@$(PIP) install -r requirements.txt -q
+	@if ls mazegen-*.whl >/dev/null 2>&1; then \
+		$(PIP) install --force-reinstall mazegen-*.whl -q; \
+		echo "Dependencies and mazegen package installed."; \
+	else \
+		echo "No mazegen-*.whl found, run 'make build-mazegen' first."; \
+		echo "Dependencies installed."; \
+	fi
 	@echo
 
 build-mazegen:
@@ -40,12 +45,12 @@ debug:
 clean:
 	@echo
 	@if [ -f $(CONFIG) ]; then \
-		OUT=$$(grep -E '^OUTPUT_FILE[[:space:]]*=' $(CONFIG) \
-			| cut -d'=' -f2 | tr -d '[:space:]'); \
+		OUT=$$(grep -E '^[[:space:]]*OUTPUT_FILE[[:space:]]*=' $(CONFIG) \
+			| head -n1 | cut -d'=' -f2 | tr -d '[:space:]'); \
 		if [ -n "$$OUT" ]; then $(RM) "$$OUT"; fi; \
 	fi
-	@$(RM) .mypy_cache .pytest_cache
-	@$(RM) dist/
+	@$(RM) .mypy_cache .pytest_cache dist build
+	@find . -type d -name "*.egg-info" -exec $(RM) {} +
 	@find . -type d -name "__pycache__" -exec $(RM) {} +
 
 lint:

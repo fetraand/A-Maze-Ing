@@ -1,6 +1,16 @@
 """Read and validate the maze configuration file."""
 
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Set, Tuple
+
+VALID_KEYS: Set[str] = {
+    "WIDTH",
+    "HEIGHT",
+    "ENTRY",
+    "EXIT",
+    "OUTPUT_FILE",
+    "PERFECT",
+    "SEED",
+}
 
 
 def _parse_coord(coord_str: str, coord_type: str) -> Tuple[int, int]:
@@ -62,6 +72,13 @@ def parse_config(filename: str) -> Dict[str, Any]:
                         f"Duplicate key '{key}' found in config file."
                     )
                 cfg[key] = value
+
+        unknown_keys = sorted(set(cfg) - VALID_KEYS)
+        if unknown_keys:
+            raise ValueError(
+                f"Unknown key(s) in config file: {', '.join(unknown_keys)}. "
+                f"Allowed keys: {', '.join(sorted(VALID_KEYS))}"
+            )
 
         if "WIDTH" not in cfg or "HEIGHT" not in cfg:
             raise ValueError("WIDTH and HEIGHT must be defined in config.")

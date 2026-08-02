@@ -45,7 +45,7 @@ def anim_launch() -> None:
             f"{color.RESET}"
         )
         flush_input()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         flush_input()
         print(f"\n{color.MAZE_GREEN}Launch skipped.{color.RESET}")
 
@@ -72,7 +72,7 @@ def anim_quit() -> None:
             time.sleep(0.4)
         time.sleep(0.2)
         os.system("clear")
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         os.system("clear")
 
 
@@ -167,7 +167,7 @@ def gamer_mode(maze: Any) -> None:
                 stdscr.refresh()
                 try:
                     stdscr.getch()
-                except KeyboardInterrupt:
+                except (KeyboardInterrupt, EOFError):
                     pass
                 return
 
@@ -182,13 +182,13 @@ def gamer_mode(maze: Any) -> None:
                     )
                     stdscr.refresh()
                     stdscr.getch()
-                except (curses.error, KeyboardInterrupt):
+                except (curses.error, KeyboardInterrupt, EOFError):
                     pass
                 return
 
             try:
                 key = stdscr.getch()
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 return
 
             val: int = maze.grid[p_y][p_x]
@@ -210,7 +210,7 @@ def gamer_mode(maze: Any) -> None:
 
     try:
         curses.wrapper(main_game)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         pass
 
 
@@ -279,7 +279,7 @@ def anim_path(maze: Any, path: List[Tuple[int, int]]) -> None:
 
             time.sleep(0.15)
         time.sleep(0.8)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print(f"\n{color.MAZE_RED}Animation skipped!{color.RESET}")
         time.sleep(0.5)
     finally:

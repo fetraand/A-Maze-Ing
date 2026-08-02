@@ -3,8 +3,7 @@ name = "mazegen"
 version = "2.0.0"
 description = "Generate a maze"
 authors = [
-    { name = "fetraand", email = "fetraand@student.42antananarivo.mg" },
-    { name = "hasandri", email = "hasandri@student.42antananarivo.mg" }
+    { name = "hasandri, fetraand" }
 ]
 requires-python = ">=3.10"
 dependencies = []

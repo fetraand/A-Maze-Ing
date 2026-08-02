@@ -337,7 +337,7 @@ make build-mazegen
 ├── parsing.py                       # Lecture et validation de la config
 ├── pyproject.toml
 ├── README.md
-├── requierements.txt
+├── requirements.txt
 └── to_maze_txt.py                   # Écriture du fichier de sortie
 ```
 
